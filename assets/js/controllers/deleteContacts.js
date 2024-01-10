@@ -1,22 +1,32 @@
 import { getContact } from '../controllers/listContactsController.js';
+import configurableMessage from '../view/view.js';
 
 function deleteContact(id) {
-    const options = {
-        method: 'DELETE',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ id }),
-    };
+    try {
+        const options = {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ id }),
+        };
 
-    fetch('./api/deleteContacts.php', options).then((data) => {
-        if (!data.ok) {
-            throw Error(data.status);
-        }
-        return data.json();
-    });
+        fetch('./api/deleteContacts.php', options).then((data) => {
+            if (!data.ok) {
+                throw Error(data.status);
+            }
+            return data.json();
+        });
 
-    location.reload();
+        configurableMessage('Cadastro deletado com sucesso!', '#ff6666');
+
+        setTimeout(() => {
+            location.reload();
+        }, 500);
+    } catch (e) {
+        console.log(e);
+        location.reload();
+    }
 }
 
 export default async function deleteContactsInDatabase(index) {

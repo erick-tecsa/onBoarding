@@ -1,4 +1,5 @@
 import { getContact } from './listContactsController.js';
+import configurableMessage from '../view/view.js';
 
 function openUpdateModal() {
     document.getElementById('updateModal').classList.add('active');
@@ -11,7 +12,6 @@ function openUpdateModal() {
 
     document.getElementById('saveEdition').addEventListener('click', () => {
         document.getElementById('updateModal').classList.remove('active');
-        location.reload();
     });
 }
 
@@ -25,44 +25,55 @@ function showModalWithInformation(dataToEdit) {
 }
 
 function updateDatabase(id) {
-    const name = document.getElementById('updateName').value;
-    const lastName = document.getElementById('updateLastName').value;
-    const email = document.getElementById('updateEmail').value;
-    const phone = document.getElementById('updatePhone').value;
-    const title = document.getElementById('updateTitle').value;
+    try {
+        const name = document.getElementById('updateName').value;
+        const lastName = document.getElementById('updateLastName').value;
+        const email = document.getElementById('updateEmail').value;
+        const phone = document.getElementById('updatePhone').value;
+        const title = document.getElementById('updateTitle').value;
 
-    const updateContact = {
-        id,
-        name,
-        lastName,
-        email,
-        phone,
-        title,
-    };
-
-    if (
-        updateContact.name &&
-        updateContact.lastName &&
-        updateContact.email &&
-        updateContact.phone &&
-        updateContact.title
-    ) {
-        const options = {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(updateContact),
+        const updateContact = {
+            id,
+            name,
+            lastName,
+            email,
+            phone,
+            title,
         };
 
-        fetch('./api/editContacts.php', options).then((data) => {
-            if (!data.ok) {
-                throw Error(data.status);
-            }
-            return data.json();
-        });
-    } else {
-        alert('O formulário não pode estar em cinza');
+        if (
+            updateContact.name &&
+            updateContact.lastName &&
+            updateContact.email &&
+            updateContact.phone &&
+            updateContact.title
+        ) {
+            const options = {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(updateContact),
+            };
+
+            fetch('./api/editContacts.php', options).then((data) => {
+                if (!data.ok) {
+                    throw Error(data.status);
+                }
+                return data.json();
+            });
+
+            configurableMessage('Cadastro salvo com sucesso!', '#ffaa00');
+
+            setTimeout(() => {
+                location.reload();
+            }, 500);
+        } else {
+            alert('O formulário não pode estar em branco');
+        }
+    } catch (e) {
+        console.log(e);
+        location.reload();
     }
 }
 

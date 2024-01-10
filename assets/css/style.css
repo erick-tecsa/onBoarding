@@ -161,3 +161,18 @@ tbody tr:nth-child(even) {
 .delete:hover {
     color: red;
 }
+
+#messageContainer {
+    height: 120px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+h3 {
+    width: 300px;
+    color: white;
+    padding: 10px;
+    border-radius: 10px;
+}
