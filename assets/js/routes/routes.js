@@ -1,6 +1,7 @@
 import { listInHtml } from '../controllers/listContactsController.js';
 import createContactsInDatabase from '../controllers/createContactsController.js';
 import editContactsInDatabase from '../controllers/editContactsController.js';
+import deleteContactsInDatabase from '../controllers/deleteContacts.js';
 
 export default class Routes {
     static async loadContactsInformation() {
@@ -25,8 +26,7 @@ export default class Routes {
     static deleteContacts(deleteButtons) {
         deleteButtons.forEach((element, index) => {
             element.addEventListener('click', async () => {
-                // await deleteContactsInDatabase(index);
-                console.log(index);
+                await deleteContactsInDatabase(index);
             });
         });
     }

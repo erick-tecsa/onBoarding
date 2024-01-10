@@ -35,6 +35,8 @@
     $phone = $decodedJson['phone'];
     $title = $decodedJson['title'];
 
+    echo $id;
+
     $dataLog = sql("UPDATE contatos SET name='$name', lastName='$lastName', email='$email', phone='$phone', title='$title' WHERE id = $id");
 
     echo $dataLog;
